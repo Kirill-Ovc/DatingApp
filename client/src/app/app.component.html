@@ -1,10 +1,10 @@
 <app-nav></app-nav>
 
 <div class="container">
-  <app-home></app-home>
+  <router-outlet></router-outlet>
 </div>
 
-<div class="container">
+<div class="container" hidden>
   <p>Users:</p>
   <ul>
     <li *ngFor="let user of users">
