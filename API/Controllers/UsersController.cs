@@ -29,4 +29,15 @@ public class UsersController : BaseApiController
     {
         return await _context.Users.FindAsync(id);
     }
+
+    [AllowAnonymous]
+    [HttpGet("server-error")]
+    public async Task<ActionResult<string>> GetServerError()
+    {
+        var thing = await _context.Users.FindAsync(-1);
+
+        var result = thing.ToString();
+
+        return result;
+    }
 }
