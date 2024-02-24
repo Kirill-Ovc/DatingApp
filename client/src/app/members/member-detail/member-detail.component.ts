@@ -31,7 +31,6 @@ export class MemberDetailComponent implements OnInit{
         this.member = m;
         this.loadImages();
       }
-
     });
   }
 
