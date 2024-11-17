@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { AccountService } from '../_services/account.service';
-import { Observable, of } from 'rxjs';
 import { User } from '../_models/user';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,16 +14,13 @@ import { NgIf, AsyncPipe, TitleCasePipe } from '@angular/common';
     standalone: true,
     imports: [RouterLink, RouterLinkActive, NgIf, BsDropdownModule, FormsModule, AsyncPipe, TitleCasePipe]
 })
-export class NavComponent implements OnInit {
+export class NavComponent{
   model: any = {}
-  currentUser$: Observable<User | null> = of(null);
+  currentUser: Signal<User | null>;
 
   constructor(private accountService: AccountService, private router: Router,
     private toastr: ToastrService) {
-  }
-
-  ngOnInit(): void {
-    this.currentUser$ = this.accountService.currentUser$;
+      this.currentUser = this.accountService.currentUser;
   }
 
   login() {
