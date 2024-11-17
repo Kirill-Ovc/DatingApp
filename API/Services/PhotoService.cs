@@ -8,7 +8,6 @@ namespace API.Services;
 
 public class PhotoService : IPhotoService
 {
-
     private readonly Cloudinary _cloudinary;
 
     public PhotoService(IOptions<CloudinarySettings> config)
@@ -19,11 +18,12 @@ public class PhotoService : IPhotoService
             config.Value.ApiSecret
         );
 
-        _cloudinary = new Cloudinary(acc);
+        //_cloudinary = new Cloudinary(acc);
+        //TODO: add settings
     }
 
     public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
-    {
+    {      
         var uploadResult = new ImageUploadResult();
 
         if (file.Length > 0)
