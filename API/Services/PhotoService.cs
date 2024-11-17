@@ -11,7 +11,7 @@ public class PhotoService : IPhotoService
 
     private readonly Cloudinary _cloudinary;
 
-    PhotoService(IOptions<CloudinarySettings> config)
+    public PhotoService(IOptions<CloudinarySettings> config)
     {
         var acc = new Account(
             config.Value.CloudName,
