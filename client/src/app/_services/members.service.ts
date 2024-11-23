@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
+import { Photo } from '../_models/photo';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,30 @@ export class MembersService {
         const index = this.members.indexOf(member);
         this.members[index] = {...this.members[index], ...member};
       }));
+  }
+
+  setMainPhoto(photo: Photo)
+  {
+    return this.http.put(this.baseUrl + 'users/set-main-photo/' + photo.id, {}).pipe(
+      tap(() => {
+        const member = this.members.find(m => m.photos.includes(photo));
+        if (member) {
+          member.photoUrl = photo.url;
+        }
+      })
+    );
+  }
+
+  deletePhoto(photo: Photo)
+  {
+    return this.http.delete(this.baseUrl + 'users/delete-photo/' + photo.id).pipe(
+      tap(() => {
+        const member = this.members.find(m => m.photos.includes(photo));
+        if (member) {
+          member.photos = member.photos.filter(p => p.id !== photo.id)
+        }
+      })
+    );
   }
 
   // we have interceptor

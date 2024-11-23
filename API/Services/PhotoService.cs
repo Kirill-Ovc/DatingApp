@@ -18,8 +18,7 @@ public class PhotoService : IPhotoService
             config.Value.ApiSecret
         );
 
-        //_cloudinary = new Cloudinary(acc);
-        //TODO: add settings
+        _cloudinary = new Cloudinary(acc);
     }
 
     public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
