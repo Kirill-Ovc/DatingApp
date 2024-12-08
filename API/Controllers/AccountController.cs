@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using System.Text;
 using API.Data;
 using API.DTOs;
@@ -42,7 +43,8 @@ public class AccountController : BaseApiController
         {
             Username = user.UserName,
             Token = _tokenService.CreateToken(user),
-            KnownAs = user.KnownAs
+            KnownAs = user.KnownAs,
+            Gender = user.Gender  
         };
     }
 
@@ -74,13 +76,33 @@ public class AccountController : BaseApiController
         {
             Username = user.UserName,
             Token = _tokenService.CreateToken(user),
-            PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+            PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+            KnownAs = user.KnownAs,
+            Gender = user.Gender
         };
-    } 
+    }
+
+    [HttpDelete("delete")]
+    public async Task<ActionResult> DeleteUser([FromQuery, Required] string userName)
+    {
+        var user = await _context.Users
+            .Include(p => p.Photos)
+            .FirstOrDefaultAsync(u => u.UserName == userName.ToLowerInvariant());
+
+        if (user is null)
+        {
+            return BadRequest("Invalid username");
+        }
+
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+
+        return Ok();
+    }
+
 
     private async Task<bool> UserExist(string username)
     {
         return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
     }
-
 }

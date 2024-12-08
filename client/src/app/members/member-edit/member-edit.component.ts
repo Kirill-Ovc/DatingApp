@@ -5,15 +5,16 @@ import { Member } from 'src/app/_models/member';
 import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NgIf } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { PhotoEditorComponent } from "../photo-editor/photo-editor.component";
+import { TimeagoModule } from 'ngx-timeago';
 
 @Component({
     selector: 'app-member-edit',
     templateUrl: './member-edit.component.html',
     styleUrls: ['./member-edit.component.css'],
     standalone: true,
-    imports: [NgIf, TabsModule, FormsModule, PhotoEditorComponent]
+    imports: [NgIf, TabsModule, FormsModule, PhotoEditorComponent, DatePipe, TimeagoModule]
 })
 export class MemberEditComponent implements OnInit {
   private accountService = inject(AccountService);

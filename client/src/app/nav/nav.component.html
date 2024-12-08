@@ -24,7 +24,7 @@
             <img class="me-2" 
               src="{{currentUser()?.photoUrl || './assets/user.png'}}" alt="user main image">
             <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>
-                Welcome {{currentUser()?.username | titlecase}}
+                Welcome {{currentUser()?.knownAs | titlecase}}
             </a>
             <div class="dropdown-menu" *dropdownMenu>
                 <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
